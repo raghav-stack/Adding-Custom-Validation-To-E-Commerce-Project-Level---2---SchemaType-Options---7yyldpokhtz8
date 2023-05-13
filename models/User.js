@@ -14,6 +14,12 @@ const userSchema = new mongoose.Schema(
             required: true,
             unique: true,
             //Add a Custom Validation Here
+            validate: {
+                validator: function(v) {
+                    return /^[^\s\W]{4,}$/.test(v);
+                },
+                message: props => `${props.value} is not a valid username! Username should be at least 4 characters long, without spaces or special characters!`
+            }
         },
         email: {
             type: String,
@@ -24,6 +30,12 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             //Add a Custom Validation Here
+            validate: {
+                validator: function(v) {
+                    return /^.{8,}$/.test(v);
+                },
+                message: props => `${props.value} is not a valid password! Password should be at least 8 characters long!`
+            }
         }
     },
     { timestamps: true }
